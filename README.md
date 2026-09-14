@@ -1,39 +1,46 @@
-# Demos
+# CogniGraph
+
+KTU S3 CSE Second Brain - Agentic AI-powered knowledge graph for university students.
+
+## Demos
 
 ![alt text](public/image.png)
-
 ![alt text](public/image-1.png)
 
+## Demo Scope
+- **7 Courses:** Data Structures, Design and Engineering, Discrete Mathematical Structures, Logic System Design, Object Oriented Programming Using Java, OOP Lab, Sustainable Engineering
+- **44 Resources:** Textbooks, notes, capsules, assignments, programs, practice material, lab material, records, series and university question papers
+- **15 Concepts:** With prerequisite chains for knowledge path tracing
 
-# React + TypeScript + Vite
+## Features
+- Knowledge graph with force-directed canvas layout
+- Semantic search across resource titles, summaries, types, sources, course codes, and concept names
+- Assistant panel with natural-language queries and prerequisite hints
+- Dashboard summary cards (courses, concepts, resources, graph links)
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+## Data Model
+- **Course:** subject code, name, semester (KTU S3)
+- **Concept:** topic with prerequisite links
+- **AcademicResource:** title, type, courseId, conceptIds, summary, source, url
 
-Currently, two official plugins are available:
+## Search
+Token-based matching across resource title, summary, type, source, course code/name/semester, and linked concept names.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Graph Relationships
+- course → concept: `contains`
+- prerequisite concept → concept: `prereq`
+- concept → resource: `supports`
 
-## React Compiler
-
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the Oxlint configuration
-
-If you are developing a production application, we recommend enabling type-aware lint rules by installing `oxlint-tsgolint` and editing `.oxlintrc.json`:
-
-```json
-{
-  "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": ["react", "typescript", "oxc"],
-  "options": {
-    "typeAware": true
-  },
-  "rules": {
-    "react/rules-of-hooks": "error",
-    "react/only-export-components": ["warn", { "allowConstantExport": true }]
-  }
-}
+## Commands
+```bash
+npm run dev    # development server
+npm run lint   # lint check
+npm run build  # build
 ```
 
-See the [Oxlint rules documentation](https://oxc.rs/docs/guide/usage/linter/rules) for the full list of rules and categories.
+## Extension Ideas (KTU CSE Focus)
+- Subject and resource-type filters
+- Module-level concepts per KTU subject
+- File ingestion for PDFs/notes/question papers
+- Graph zoom/pan and click-to-filter
+- Local persistence for custom resources
