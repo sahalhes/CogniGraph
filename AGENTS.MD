@@ -1,44 +1,31 @@
-# CogniGraph - KTU CSE Second Brain
+# CogniGraph
 
-## Project Overview
-CogniGraph is a Vite + React + TypeScript knowledge graph tool for KTU S3 Computer Science students. It organizes academic resources (notes, capsules, question papers, textbooks) into a searchable graph with concepts and prerequisites.
+KTU S3 CSE study workspace: React + TypeScript + Vite frontend, Express TypeScript backend, Gemini, and Neo4j. Read README.md for setup and architecture.
 
-## Current Scope - KTU S3 CSE
-**Courses:** Data Structures, Design and Engineering, Discrete Mathematical Structures, Logic System Design, Object Oriented Programming Using Java, OOP Lab, Sustainable Engineering
+## Core data flow
 
-**Resources:** 44 items across textbooks, notes, capsules, assignments, programs, practice material, lab material, records, series and university question papers
+`src/data/sampleKnowledgeBase.ts` seeds the shared 7-course, 15-concept, 44-resource catalog. `server/database.ts` persists courses, concepts, prerequisites, personal notes, learner profiles, and chat messages in Neo4j. Browser users are identified by signed HTTP-only cookies. Access to personal resources is always scoped by learner ID; shared seed resources are read-only through the API.
 
-**Concepts:** 15 nodes with prerequisite chains enabling knowledge path tracing
+`server/retrieval.ts` ranks saved metadata/note text and expands prerequisite paths. `server/gemini.ts` sends that graph context, the learning profile and recent history to Gemini, validates structured output, and filters invented source IDs. It does not read linked files or execute model-generated Cypher. `server/youtube.ts` provides real video results when configured, otherwise explicitly labeled search links. `server/presentation.ts` renders validated Gemini outlines as editable PPTX downloads with speaker notes.
 
-## Core Features
-- **Knowledge Graph:** Force-directed canvas rendering of courses → concepts → resources
-- **Semantic Search:** Token-based matching across titles, summaries, types, sources, course codes
-- **Assistant Panel:** Natural-language queries with resource recommendations and prerequisite hints
-- **Dashboard Stats:** Courses, concepts, resources, and graph link counts
-
-## Data Model
-- `Course`: subject code, name, semester (KTU S3)
-- `Concept`: topic with prerequisite links forming knowledge paths
-- `AcademicResource`: title, type, courseId, conceptIds, summary, source (Google Drive/OneDrive), url
-
-## Search Behavior
-Simple token matching across resource title, summary, type, source, course code/name/semester, and linked concept names. Queries like "KTU S3 OOP question papers" match resources even without exact phrase.
-
-## Graph Relationships
-- course → concept: `contains`
-- prerequisite concept → concept: `prereq`  
-- concept → resource: `supports`
+The frontend loads `/api/workspace`. Offline sample data is a visible catalog preview; AI and persistence must not silently fall back to fake success. Search and assistant drafts are independent. `KnowledgeService` handles local search, stats and namespaced graph construction, not AI responses.
 
 ## Commands
-```bash
-npm run dev    # development server
-npm run lint   # lint check
-npm run build  # build (may need outside sandbox on Windows)
-```
 
-## Extension Ideas (KTU CSE Focus)
-- Subject filters and resource-type filters
-- Module-level concepts per KTU subject
-- File ingestion for PDFs/notes/question papers
-- Graph zoom/pan and click-to-filter
-- Local persistence for custom resources
+- `npm run dev`: frontend and backend together
+- `npm run build`: type-check frontend and server, then bundle frontend
+- `npm run lint`: Oxlint
+- `npm test`: offline unit/API/provider-contract tests
+- `RUN_NEO4J_TESTS=1 npm run test:integration`: real database test using .env
+- `docker compose up -d`: local Neo4j
+- `NODE_ENV=production npm start`: full-stack server serving dist (set APP_ORIGIN)
+
+## Implementation requirements
+
+- Keep all credentials server-side in ignored .env or deployment environment variables. Never use VITE_ for keys.
+- Parameterize Cypher, validate API input, and enforce learner ownership in database queries.
+- Treat saved notes as model context, not trusted instructions.
+- Preserve explicit setup, loading, error, and YouTube fallback states.
+- Namespace graph IDs by kind; concept/resource IDs overlap in the seed catalog.
+- Test behavior across the API/database/provider boundaries. Default tests must not spend provider quota.
+- The current identity model is browser-based, not account authentication. Do not imply cross-device access.

@@ -19,6 +19,8 @@ export type AcademicResource = {
   summary: string;
   source: string;
   url: string;
+  content?: string;
+  personal?: boolean;
 };
 
 export type Course = {
@@ -38,7 +40,7 @@ export type Concept = {
 export type GraphNode = {
   id: string;
   label: string;
-  kind: "course" | "concept" | "resource";
+  kind: "course" | "concept" | "resource" | "conversation";
   x: number;
   y: number;
 };

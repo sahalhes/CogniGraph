@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "target": "ES2023",
+    "lib": ["ES2023", "DOM"],
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "strict": true,
+    "noEmit": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "types": ["node"],
+    "allowImportingTsExtensions": true
+  },
+  "include": ["server", "tests", "src/domain", "src/data"]
+}

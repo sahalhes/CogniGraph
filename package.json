@@ -4,23 +4,44 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "tsc -b && vite build",
+    "dev": "concurrently -k \"tsx watch server/index.ts\" \"vite\"",
+    "build": "tsc -b && tsc -p tsconfig.server.json && vite build",
     "lint": "oxlint",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "dev:client": "vite",
+    "dev:server": "tsx watch server/index.ts",
+    "start": "tsx server/index.ts",
+    "test": "tsx --test tests/*.test.ts",
+    "test:integration": "tsx --test tests/*.integration.ts"
   },
   "dependencies": {
+    "@google/genai": "^2.31.0",
+    "dotenv": "^18.0.9",
+    "express": "^5.3.0",
+    "express-rate-limit": "^8.7.1",
     "lucide-react": "^1.45.0",
+    "neo4j-driver": "^6.2.0",
+    "pptxgenjs": "^4.0.1",
     "react": "^19.2.8",
-    "react-dom": "^19.2.8"
+    "react-dom": "^19.2.8",
+    "react-markdown": "^10.1.0",
+    "tsx": "^4.23.15",
+    "zod": "^4.6.7"
   },
   "devDependencies": {
+    "@types/express": "^5.0.6",
     "@types/node": "^24.13.3",
     "@types/react": "^19.2.18",
     "@types/react-dom": "^19.2.7",
     "@vitejs/plugin-react": "^6.1.1",
+    "concurrently": "^10.0.6",
+    "jszip": "^3.10.2",
     "oxlint": "^1.81.0",
+    "prettier": "^3.9.10",
     "typescript": "~6.0.2",
     "vite": "^8.3.0"
+  },
+  "overrides": {
+    "image-size": "^2.0.3"
   }
 }
