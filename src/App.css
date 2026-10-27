@@ -125,65 +125,91 @@ h3 {
   margin-bottom: 16px;
 }
 
-.panel-header > span {
-  color: #57706a;
-  font-size: 0.88rem;
-  font-weight: 800;
+.panel-header > span,
+.graph-hint {
+  color: #8a9fa0;
+  font-size: 0.78rem;
+  font-weight: 600;
+  white-space: nowrap;
 }
 
-.graph-canvas-wrap {
+/* ── graph canvas wrap: square ──────────────────────────────── */
+.graph-wrap {
   aspect-ratio: 760 / 440;
-  background: #f7fbf8;
-  border: 1px solid #dce7e2;
-  border-radius: 8px;
+  background: #fafafa;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
   overflow: hidden;
   position: relative;
   width: 100%;
 }
 
 .graph-canvas {
-  aspect-ratio: 760 / 440;
   display: block;
   height: 100%;
   width: 100%;
 }
 
-.graph-tooltip {
+/* ── tooltip ─────────────────────────────────────────────────── */
+.graph-tip {
   background: #ffffff;
-  border: 1px solid #d6e2dd;
-  border-left: 4px solid #245d55;
-  border-radius: 8px;
-  bottom: 14px;
-  box-shadow: 0 14px 36px rgba(33, 53, 48, 0.12);
-  left: 14px;
-  max-width: min(320px, calc(100% - 28px));
-  padding: 10px 12px;
+  border: 1px solid #e5e7eb;
+  border-left: 3px solid #2d6a4f;
+  border-radius: 7px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+  max-width: 200px;
+  padding: 8px 12px;
+  pointer-events: none;
   position: absolute;
+  z-index: 10;
 }
 
-.graph-tooltip.concept {
-  border-left-color: #bd6e3f;
+.graph-tip.concept  { border-left-color: #e07b39; }
+.graph-tip.resource { border-left-color: #4a90d9; }
+
+.graph-tip strong,
+.graph-tip span { display: block; }
+
+.graph-tip strong {
+  color: #1a202c;
+  font-size: 0.84rem;
+  line-height: 1.3;
+  margin-bottom: 2px;
 }
 
-.graph-tooltip.resource {
-  border-left-color: #4f83a7;
-}
-
-.graph-tooltip strong,
-.graph-tooltip span {
-  display: block;
-}
-
-.graph-tooltip strong {
-  color: #172521;
-  font-size: 0.88rem;
-}
-
-.graph-tooltip span {
-  color: #667773;
-  font-size: 0.74rem;
-  font-weight: 800;
+.graph-tip span {
+  color: #9ca3af;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
+}
+
+/* ── legend ──────────────────────────────────────────────────── */
+.graph-legend {
+  bottom: 10px;
+  display: flex;
+  gap: 12px;
+  position: absolute;
+  right: 12px;
+}
+
+.graph-legend-item {
+  align-items: center;
+  color: #9ca3af;
+  display: flex;
+  font-size: 0.70rem;
+  font-weight: 600;
+  gap: 5px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.graph-legend-dot {
+  border-radius: 50%;
+  display: inline-block;
+  height: 8px;
+  width: 8px;
 }
 
 .search-box,
